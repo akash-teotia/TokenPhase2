@@ -1,10 +1,12 @@
 package com.sonnetindianetworks.tokenapp
 
+import android.app.DatePickerDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.DatePicker
 import android.widget.EditText
 import android.widget.Toast
 import com.google.firebase.firestore.FirebaseFirestore
@@ -13,17 +15,23 @@ import com.hbb20.CountryCodePicker
 import kotlinx.android.synthetic.main.activity_generate_token.*
 import java.util.*
 
-class GenerateToken : AppCompatActivity() {
+class GenerateToken : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
 
     lateinit var tokenNoGenerateToken: EditText
 
     lateinit var mobileGenerateToken: EditText
-
+var finalDate: String  = ""
     lateinit var nameGenerateToken: EditText
     lateinit var dateGenerateToken: EditText
     lateinit var issuedByGenerateToken: EditText
 
+    var day = 0
+    var month = 0
+    var year = 0
 
+    var savedDay = 0
+    var savedMonth = 0
+    var savedYear = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         overridePendingTransition(R.anim.fadein, R.anim.fadeout)
 
@@ -43,11 +51,12 @@ class GenerateToken : AppCompatActivity() {
     }
 
     private fun generateToken() {
+        pickDate()
         val db = FirebaseFirestore.getInstance()
         val name = nameGenerateToken.text.toString().trim()
 
         val issuedBy = issuedByGenerateToken.text.toString()
-        val date = dateGenerateToken.text.toString()
+        val date = finalDate
         val tokenNo = tokenNoGenerateToken.text.toString()
         val ccp: CountryCodePicker = findViewById(R.id.ccp)
         val dataMobile = "+" + ccp.fullNumberWithPlus + mobileGenerateToken.text.toString()
@@ -63,7 +72,7 @@ class GenerateToken : AppCompatActivity() {
             db.collection("UserDetails").document(dataMobile).collection("IssuedToken")
                 .document(issuedBy)
                 .set(token, SetOptions.merge())
-           // Toast.makeText(this, "Token Successfully Issued", Toast.LENGTH_SHORT).show()
+            // Toast.makeText(this, "Token Successfully Issued", Toast.LENGTH_SHORT).show()
 
 
         }
@@ -100,7 +109,38 @@ class GenerateToken : AppCompatActivity() {
         Toast.makeText(this, "Logout Successfully", Toast.LENGTH_SHORT).show()
     }
 
+
+
+
+    private fun pickDate() {
+
+        button_Date_GenerateToken.setOnClickListener {
+            getDate()
+            DatePickerDialog(this, this, year, month, day).show()
+
+
+        }
+
+    }
+    private fun getDate() {
+        val cal: Calendar = Calendar.getInstance()
+        day = cal.get(Calendar.DAY_OF_MONTH)
+        month = cal.get(Calendar.MONTH)
+        year = cal.get(Calendar.YEAR)
+    }
+
+    override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
+        savedDay = dayOfMonth
+        savedMonth = month
+        savedYear = year
+        getDate()
+        val datePick = "$savedDay-$savedMonth-$savedYear"
+finalDate = datePick
+    }
+
+
 }
+
 data class TokenGenerate(
     val tokenNo: String? = null,
     val issuedBy: String? = null,
