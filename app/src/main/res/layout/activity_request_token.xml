@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/ic_bg"
+    tools:context=".RequestToken">
+
+    <TextView
+        android:id="@+id/textView_goBack_dash"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="60dp"
+
+        android:text="Go Back"
+        android:textColor="#00ACC1"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/editText_request_RequestToken"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="132dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/rounded_edittext_register"
+        android:ems="10"
+        android:hint="Request"
+        android:importantForAutofill="no"
+        android:inputType="textPersonName"
+        android:padding="10dp"
+        android:textColor="#00ACC1"
+        android:textStyle="bold"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textView_appName" />
+
+    <EditText
+        android:id="@+id/editText_mobile_RequestToken"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/rounded_edittext_register"
+        android:hint="Mobile Number"
+        android:importantForAutofill="no"
+        android:inputType="phone"
+        android:padding="10dp"
+        android:textColor="#00ACC1"
+        android:textStyle="bold"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="@+id/editText_request_RequestToken"
+        app:layout_constraintStart_toStartOf="@+id/editText_request_RequestToken"
+        app:layout_constraintTop_toBottomOf="@+id/editText_request_RequestToken" />
+
+    <EditText
+        android:id="@+id/editText_name_RequestToken"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/rounded_edittext_register"
+        android:hint="@string/name"
+        android:importantForAutofill="no"
+        android:inputType="textPersonName"
+        android:padding="10dp"
+        android:textColor="#00ACC1"
+        android:textStyle="bold"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="@+id/editText_mobile_RequestToken"
+        app:layout_constraintStart_toStartOf="@+id/editText_mobile_RequestToken"
+        app:layout_constraintTop_toBottomOf="@+id/editText_mobile_RequestToken" />
+
+    <EditText
+        android:id="@+id/editText_date_RequestToken"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/rounded_edittext_register"
+        android:hint="Date"
+        android:inputType="date"
+        android:padding="10dp"
+        android:textColor="#00ACC1"
+        android:textStyle="bold"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="@+id/editText_name_RequestToken"
+        app:layout_constraintStart_toStartOf="@+id/editText_name_RequestToken"
+        app:layout_constraintTop_toBottomOf="@+id/editText_name_RequestToken"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/button_RequestToken"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+
+
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/button_login"
+        android:text="Send Request"
+        android:textColor="#0097A7"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/editText_remarks_RequestToken"
+        app:layout_constraintStart_toStartOf="@+id/editText_remarks_RequestToken"
+        app:layout_constraintTop_toBottomOf="@+id/editText_remarks_RequestToken" />
+
+    <TextView
+        android:id="@+id/textView_appName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+
+        android:fontFamily="@font/vampiro_one"
+        android:text="@string/app_name"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textSize="36sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/editText_remarks_RequestToken"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/rounded_edittext_register"
+        android:ems="10"
+        android:hint="Remarks"
+        android:inputType="text"
+
+        android:padding="10dp"
+        android:textColor="#00ACC1"
+        android:textStyle="bold"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="@+id/editText_date_RequestToken"
+        app:layout_constraintHorizontal_bias="0.507"
+        app:layout_constraintStart_toStartOf="@+id/editText_date_RequestToken"
+        app:layout_constraintTop_toBottomOf="@+id/editText_date_RequestToken" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
