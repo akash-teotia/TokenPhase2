@@ -10,38 +10,7 @@
 
     tools:context=".GenerateToken">
 
-   <!-- <TextView
-        android:id="@+id/textView_appName"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="#00ACC1"
-        android:fontFamily="@font/vampiro_one"
 
-        android:text="@string/app_name"
-        android:textAlignment="center"
-        android:textColor="#FFFFFF"
-        android:textSize="36sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />-->
-
-   <!-- <TextView
-        android:id="@+id/textView_goBack_dash"
-
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="60dp"
-
-        android:text="Go Back"
-        android:textColor="#00ACC1"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />-->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -95,8 +64,50 @@
             android:textColor="@android:color/black"
             android:textStyle="bold"
             android:visibility="visible" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="32dp"
 
-    <EditText
+            android:background="@drawable/rounded_edittext_register"
+
+            android:orientation="horizontal">
+
+            <com.hbb20.CountryCodePicker
+                android:id="@+id/ccp"
+
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:padding="5dp"
+
+                app:ccp_autoDetectCountry="true"
+
+                app:ccp_defaultNameCode="IN"
+                app:ccp_showPhoneCode="false"
+                app:ccp_textGravity="LEFT"
+                app:ccp_textSize="18dp"
+
+                />
+
+            <EditText
+                android:id="@+id/editText_mobile_GenerateTokenActivity"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="2"
+                android:background="@android:color/transparent"
+                android:ems="10"
+                android:hint="@string/mobile_number"
+                android:importantForAutofill="no"
+                android:inputType="phone"
+                android:padding="10dp"
+                android:textColor="@android:color/black"
+                android:textStyle="bold" />
+        </LinearLayout>
+    <!--<EditText
         android:id="@+id/editText_mobile_GenerateTokenActivity"
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -112,7 +123,7 @@
         android:textColor="@android:color/black"
         android:textStyle="bold"
         android:visibility="visible"
-         />
+         />-->
 
     <EditText
         android:id="@+id/editText_name_GenerateTokenActivity"

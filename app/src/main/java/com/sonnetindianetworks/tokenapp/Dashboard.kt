@@ -11,10 +11,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.Toast
+import android.widget.*
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -39,14 +36,16 @@ class Dashboard : AppCompatActivity() {
 lateinit var dashImg: ImageView
     override fun onCreate(savedInstanceState: Bundle?) {
         overridePendingTransition(R.anim.fadein, R.anim.fadeout)
-
         sharedprefs = getSharedPreferences("MOBILE" , Context.MODE_PRIVATE)
         mobile = sharedprefs.getString("MOBILE" , "").toString()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dashboard)
-        dashImg = findViewById(R.id.imageView_dash)
         auth = FirebaseAuth.getInstance()
-       val mobileVal: String = mobile
+        dashImg = findViewById(R.id.imageView_dash)
+
+        val mobileVal: String = mobile
+
+
         if (mobileVal.isEmpty() ) return signOut()
 
         fetchTokens()
@@ -56,13 +55,7 @@ lateinit var dashImg: ImageView
         recyclerView_DashboardActivity.adapter = adapterIssueToken
 
 
-       if (IssueTokenList.isNotEmpty() ) {
-           dashImg.visibility = INVISIBLE
-       }
-        else    {
-           dashImg.visibility = VISIBLE
 
-       }
 
 
         button_generate.setOnClickListener {
@@ -97,6 +90,7 @@ lateinit var dashImg: ImageView
 
                 for ( doc in snap) {
                     IssueTokenList = snap.toObjects(DashTokenIssueModal::class.java)
+
 
                     adapterIssueToken.IssuedTokens = IssueTokenList
                     adapterIssueToken.notifyDataSetChanged()
