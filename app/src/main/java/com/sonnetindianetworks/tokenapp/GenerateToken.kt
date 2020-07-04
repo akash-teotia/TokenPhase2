@@ -8,11 +8,13 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.DatePicker
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import com.hbb20.CountryCodePicker
 import kotlinx.android.synthetic.main.activity_generate_token.*
+import kotlinx.android.synthetic.main.activity_login.*
 import java.util.*
 
 class GenerateToken : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
@@ -20,9 +22,9 @@ class GenerateToken : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
     lateinit var tokenNoGenerateToken: EditText
 
     lateinit var mobileGenerateToken: EditText
-var finalDate: String  = ""
+    var finalDate: String = ""
     lateinit var nameGenerateToken: EditText
-    lateinit var dateGenerateToken: EditText
+    lateinit var dateGenerateToken: TextView
     lateinit var issuedByGenerateToken: EditText
 
     var day = 0
@@ -45,19 +47,26 @@ var finalDate: String  = ""
         issuedByGenerateToken = findViewById(R.id.editText_issuedBy_GenerateTokenActivity)
 
         button_sendToken_GenerateTokenActivity.setOnClickListener {
+            button_sendToken_GenerateTokenActivity.setBackgroundResource(R.drawable.button_pressed)
+            button_sendToken_GenerateTokenActivity.animate().apply {
+                duration = 300
+                rotationXBy(360f)
+
+            }
             generateToken()
         }
+        pickDate()
 
     }
 
     private fun generateToken() {
-        pickDate()
+
         val db = FirebaseFirestore.getInstance()
         val name = nameGenerateToken.text.toString().trim()
 
         val issuedBy = issuedByGenerateToken.text.toString()
         val date = finalDate
-        val tokenNo = tokenNoGenerateToken.text.toString()
+        val tokenNo = tokenNoGenerateToken.text.toString().toUpperCase(Locale.ROOT)
         val ccp: CountryCodePicker = findViewById(R.id.ccp)
         val dataMobile = "+" + ccp.fullNumberWithPlus + mobileGenerateToken.text.toString()
         Toast.makeText(this, dataMobile, Toast.LENGTH_SHORT).show()
@@ -72,7 +81,7 @@ var finalDate: String  = ""
             db.collection("UserDetails").document(dataMobile).collection("IssuedToken")
                 .document(issuedBy)
                 .set(token, SetOptions.merge())
-            // Toast.makeText(this, "Token Successfully Issued", Toast.LENGTH_SHORT).show()
+             Toast.makeText(this, "Token Successfully Issued + $date", Toast.LENGTH_SHORT).show()
 
 
         }
@@ -110,32 +119,30 @@ var finalDate: String  = ""
     }
 
 
-
-
     private fun pickDate() {
 
         button_Date_GenerateToken.setOnClickListener {
-            getDate()
             DatePickerDialog(this, this, year, month, day).show()
+
+            val cal: Calendar = Calendar.getInstance()
+            day = cal.get(Calendar.DAY_OF_MONTH)
+            month = cal.get(Calendar.MONTH)
+            year = cal.get(Calendar.YEAR)
 
 
         }
 
     }
-    private fun getDate() {
-        val cal: Calendar = Calendar.getInstance()
-        day = cal.get(Calendar.DAY_OF_MONTH)
-        month = cal.get(Calendar.MONTH)
-        year = cal.get(Calendar.YEAR)
-    }
+
 
     override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
         savedDay = dayOfMonth
-        savedMonth = month
+        savedMonth = month + 1
         savedYear = year
-        getDate()
+        pickDate()
         val datePick = "$savedDay-$savedMonth-$savedYear"
-finalDate = datePick
+dateGenerateToken.text = datePick
+        finalDate = datePick
     }
 
 

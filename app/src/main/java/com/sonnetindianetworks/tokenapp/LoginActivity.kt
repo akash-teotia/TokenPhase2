@@ -3,6 +3,7 @@ package com.sonnetindianetworks.tokenapp
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -52,6 +53,16 @@ class LoginActivity : AppCompatActivity() {
         }*/
 
         verify_button_LoginActivity.setOnClickListener {
+
+            verify_button_LoginActivity.setBackgroundResource(R.drawable.button_pressed)
+            verify_button_LoginActivity.animate().apply {
+                duration = 300
+                rotationXBy(360f)
+
+
+            }
+
+
             if (otp.text.toString().trim().isNotEmpty()) {
                 authenticate()
             } else {
@@ -62,6 +73,13 @@ class LoginActivity : AppCompatActivity() {
         }
 
         send_button_LoginActivity.setOnClickListener {
+send_button_LoginActivity.setBackgroundResource(R.drawable.button_pressed)
+            send_button_LoginActivity.animate().apply {
+duration = 300
+                rotationXBy(360f)
+
+
+            }
             if (mobile.text.isNotEmpty()) {
 
                 sendVerificationCodeToUser()

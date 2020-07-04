@@ -25,28 +25,33 @@ import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import com.xwray.groupie.Item
 import kotlinx.android.synthetic.main.activity_dashboard.*
+import kotlinx.android.synthetic.main.activity_login.*
 
 class Dashboard : AppCompatActivity() {
     lateinit var auth: FirebaseAuth
+    val noTokenFragment = NoTokenFragment()
 
     private var IssueTokenList: List<DashTokenIssueModal> = ArrayList()
     lateinit var sharedprefs: SharedPreferences
     private val adapterIssueToken: AdapterIssueToken = AdapterIssueToken(IssueTokenList)
     var mobile: String = ""
-lateinit var dashImg: ImageView
     override fun onCreate(savedInstanceState: Bundle?) {
         overridePendingTransition(R.anim.fadein, R.anim.fadeout)
-        sharedprefs = getSharedPreferences("MOBILE" , Context.MODE_PRIVATE)
-        mobile = sharedprefs.getString("MOBILE" , "").toString()
+        sharedprefs = getSharedPreferences("MOBILE", Context.MODE_PRIVATE)
+        mobile = sharedprefs.getString("MOBILE", "").toString()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dashboard)
         auth = FirebaseAuth.getInstance()
-        dashImg = findViewById(R.id.imageView_dash)
+
+        val recyclerViewFragment = RecyclerViewFragment()
+
+
+
 
         val mobileVal: String = mobile
 
 
-        if (mobileVal.isEmpty() ) return signOut()
+        if (mobileVal.isEmpty()) return signOut()
 
         fetchTokens()
 
@@ -59,9 +64,25 @@ lateinit var dashImg: ImageView
 
 
         button_generate.setOnClickListener {
+            button_generate.setBackgroundResource(R.drawable.button_pressed)
+            button_generate.animate().apply {
+                duration = 300
+                rotationXBy(360f)
+
+
+            }
             startActivity(Intent(this, GenerateToken::class.java))
         }
+
+
         button_RequestToken_DashboardActivity.setOnClickListener {
+            button_RequestToken_DashboardActivity.setBackgroundResource(R.drawable.button_pressed)
+            button_RequestToken_DashboardActivity.animate().apply {
+                duration = 300
+                rotationXBy(360f)
+
+
+            }
             startActivity(Intent(this, RequestToken::class.java))
 
         }
@@ -71,12 +92,13 @@ lateinit var dashImg: ImageView
 
     private fun fetchTokens() {
         val dataMobile = mobile
-        if (dataMobile.isEmpty()){
+        if (dataMobile.isEmpty()) {
             return signOut()
         }
-        
+
         val db = FirebaseFirestore.getInstance()
-        val fireStoreTokens =  db.collection("UserDetails").document(dataMobile).collection("IssuedToken")
+        val fireStoreTokens =
+            db.collection("UserDetails").document(dataMobile).collection("IssuedToken")
 
 
 
@@ -88,7 +110,7 @@ lateinit var dashImg: ImageView
             if (snap != null) {
 //                Log.d("token", "Current data: ${snap.documents}")
 
-                for ( doc in snap) {
+                for (doc in snap) {
                     IssueTokenList = snap.toObjects(DashTokenIssueModal::class.java)
 
 
@@ -100,7 +122,13 @@ lateinit var dashImg: ImageView
 
 
             } else {
-                Log.d("token", "Current data: null")
+
+                supportFragmentManager.beginTransaction().apply {
+                    replace(R.id.frameLayout_Dashboard, noTokenFragment)
+                    addToBackStack(null)
+                    commit()
+                }
+                Log.d("tokenDash", "Current data: null")
             }
 
         }
@@ -110,9 +138,6 @@ lateinit var dashImg: ImageView
 
     override fun onStart() {
         super.onStart()
-
-
-
         if (auth.currentUser == null) {
             val intent = Intent(this, LoginActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)

@@ -168,14 +168,15 @@ android:background="@android:color/transparent"
 
 
 
-        <EditText
+        <TextView
             android:id="@+id/date_GenerateTokenActivity"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_weight="2"
             android:background="@android:color/transparent"
             android:hint="@string/date"
-            android:inputType="date"
+            android:textSize="18sp"
+
             android:padding="10dp"
             android:textColor="@android:color/black"
             android:textStyle="bold"
