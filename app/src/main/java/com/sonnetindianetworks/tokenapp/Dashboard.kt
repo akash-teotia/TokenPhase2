@@ -3,14 +3,14 @@ package com.sonnetindianetworks.tokenapp
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.media.Image
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.view.View.INVISIBLE
-import android.view.View.VISIBLE
+import android.view.View.*
 import android.widget.*
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -26,15 +26,18 @@ import com.xwray.groupie.GroupieViewHolder
 import com.xwray.groupie.Item
 import kotlinx.android.synthetic.main.activity_dashboard.*
 import kotlinx.android.synthetic.main.activity_login.*
+import javax.annotation.meta.When
 
 class Dashboard : AppCompatActivity() {
     lateinit var auth: FirebaseAuth
-    val noTokenFragment = NoTokenFragment()
-
+    lateinit var dash: LinearLayout
     private var IssueTokenList: List<DashTokenIssueModal> = ArrayList()
     lateinit var sharedprefs: SharedPreferences
     private val adapterIssueToken: AdapterIssueToken = AdapterIssueToken(IssueTokenList)
     var mobile: String = ""
+
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         overridePendingTransition(R.anim.fadein, R.anim.fadeout)
         sharedprefs = getSharedPreferences("MOBILE", Context.MODE_PRIVATE)
@@ -42,8 +45,17 @@ class Dashboard : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dashboard)
         auth = FirebaseAuth.getInstance()
+        dash = findViewById(R.id.emptyListLayout)
 
-        val recyclerViewFragment = RecyclerViewFragment()
+
+      //For Popup
+
+val Window = PopupWindow(this)
+        val view = layoutInflater.inflate(R.layout.popup_no_tokens,null)
+Window.contentView = view
+
+
+
 
 
 
@@ -56,6 +68,10 @@ class Dashboard : AppCompatActivity() {
         fetchTokens()
 
 
+
+
+
+
         recyclerView_DashboardActivity.layoutManager = LinearLayoutManager(this)
         recyclerView_DashboardActivity.adapter = adapterIssueToken
 
@@ -64,25 +80,13 @@ class Dashboard : AppCompatActivity() {
 
 
         button_generate.setOnClickListener {
-            button_generate.setBackgroundResource(R.drawable.button_pressed)
-            button_generate.animate().apply {
-                duration = 300
-                rotationXBy(360f)
 
-
-            }
             startActivity(Intent(this, GenerateToken::class.java))
         }
 
 
         button_RequestToken_DashboardActivity.setOnClickListener {
-            button_RequestToken_DashboardActivity.setBackgroundResource(R.drawable.button_pressed)
-            button_RequestToken_DashboardActivity.animate().apply {
-                duration = 300
-                rotationXBy(360f)
 
-
-            }
             startActivity(Intent(this, RequestToken::class.java))
 
         }
@@ -108,13 +112,17 @@ class Dashboard : AppCompatActivity() {
                 return@addSnapshotListener
             }
             if (snap != null) {
+
+
+
+
 //                Log.d("token", "Current data: ${snap.documents}")
 
                 for (doc in snap) {
                     IssueTokenList = snap.toObjects(DashTokenIssueModal::class.java)
 
-
                     adapterIssueToken.IssuedTokens = IssueTokenList
+
                     adapterIssueToken.notifyDataSetChanged()
                     Log.d("token", "Current data: $IssueTokenList")
 
@@ -123,11 +131,7 @@ class Dashboard : AppCompatActivity() {
 
             } else {
 
-                supportFragmentManager.beginTransaction().apply {
-                    replace(R.id.frameLayout_Dashboard, noTokenFragment)
-                    addToBackStack(null)
-                    commit()
-                }
+
                 Log.d("tokenDash", "Current data: null")
             }
 

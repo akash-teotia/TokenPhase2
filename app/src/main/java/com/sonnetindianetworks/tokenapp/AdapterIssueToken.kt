@@ -8,8 +8,11 @@ import kotlinx.android.synthetic.main.recycleview_dashboard.view.*
 
 class AdapterIssueToken(var IssuedTokens: List<DashTokenIssueModal>) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+
+
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
-    
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val itemView = LayoutInflater.from(parent.context)
